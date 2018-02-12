@@ -1,4 +1,4 @@
-from module.Strategy import FonceurStrategy
+from .Strategy import FonceurStrategy
 from soccersimulator import SoccerTeam
 
 def get_team(nb_players):
