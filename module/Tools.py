@@ -1,5 +1,6 @@
 from soccersimulator  import Strategy, SoccerAction, Vector2D, SoccerState
 from soccersimulator.settings import *
+from math import exp
 
 class Tools(object):
 	def __init__(self,state):
@@ -13,6 +14,20 @@ class Tools(object):
 
 	def vect_ball_player(self,id_player,id_team):
 		return self.vect_goal(id_team) - self.state.player_state(id_team,id_player).position
+
+	def vect_my_goal_player(self,id_player,id_team):
+		return self.my_goal(id_team) - self.state.player_state(id_team,id_player).position
+
+	def vect_goal_player(self,id_player,id_team):
+		return self.vect_goal(id_team) - self.state.player_state(id_team,id_player).position
+
+	def dist_goal_player(self,id_player,id_team):
+		return self.state.player_state(id_team,id_player).position.distance(self.vect_goal(id_team))
+
+	def my_goal(self,id_team):
+		if id_team==1:
+			return Vector2D(0,GAME_HEIGHT/2.)
+		return Vector2D(GAME_WIDTH, GAME_HEIGHT/2.)
 
 	def vect_goal(self,id_team):
 		if id_team==1:
@@ -68,5 +83,18 @@ class Tools(object):
 			if (self.state.player_state(L[i][0],L[i][1]).position).x > (self.state.player_state(id_team,id_player).position).x-5. and (self.state.player_state(L[i][0],L[i][1]).position).x < (self.state.player_state(id_team,id_player).position).x+5. and (self.state.player_state(L[i][0],L[i][1]).position).y > (self.state.player_state(id_team,id_player).position).y-5. and (self.state.player_state(L[i][0],L[i][1]).position).y < (self.state.player_state(id_team,id_player).position).y+5.:
 				u = True
 		return u
+
+	def f(self,alpha,dist):
+		return 1/(1+exp(-alpha*(dist-30)))
+
+	def g(self,alpha,dist):
+		return 1-exp(-alpha*dist)
+
+	def est_dans_tiers_terrain(self,id_team):
+		if id_team==1:
+			return self.state.ball.position.x < (GAME_WIDTH/3.)
+		else:
+			return self.state.ball.position.x > ((2*GAME_WIDTH)/3.)
+
 
 
