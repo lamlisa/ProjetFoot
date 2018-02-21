@@ -8,7 +8,9 @@ class Comportement(object):
 
 	def shoot_ball(self,id_team):
 		t = Tools(self.state)
-		return SoccerAction(t.vect_ball_goal(id_team).normalize() * 0.2, t.vect_ball_goal(id_team).normalize()*4.)
+		if t.tiers_attaque(id_team):
+			return SoccerAction(t.vect_ball_goal(id_team).normalize() * 0.2, t.vect_ball_goal(id_team).normalize()*4.)
+		return SoccerAction(t.vect_ball_goal(id_team).normalize() * 0.2, t.vect_ball_goal(id_team).normalize()*5.)
 	
 	def run_player(self,id_player,id_team):
 		t = Tools(self.state)
@@ -40,11 +42,11 @@ class Comportement(object):
 
 	def shoot_ballD(self,id_team):
 		t = Tools(self.state)
-		return SoccerAction(t.vect_ball_goal(id_team).normalize() * 0.2, t.vect_ball_goal(id_team).normalize()*5.)
+		return SoccerAction(t.vect_ball_goal(id_team).normalize() * 0.2, t.vect_ball_goal(id_team).normalize()*6.)
 	
 	def run_playerD(self,id_player,id_team):
 		t = Tools(self.state)
-		return SoccerAction((Vector2D(self.state.ball.position.x+0.5, self.state.ball.position.y+0.5)-self.state.player_state(id_team,id_player).position).normalize() * 0.2, Vector2D(0,0))
+		return SoccerAction(((5*self.state.ball.vitesse+self.state.ball.position)-self.state.player_state(id_team,id_player).position).normalize() * 0.2, Vector2D(0,0))
 
 
 

@@ -34,6 +34,15 @@ class DefenseurStrategy(Strategy):
 class GoalStrategy(Strategy):
 	def __init__(self):
 		Strategy.__init__(self,"Goal")
+	def compute_strategy(self,state,id_team,id_player):
+		t = Tools(state)
+		c = Comportement(state)
+		if t.perimetre_goal(id_team): 
+			if t.test_shoot(id_player,id_team):
+				return c.shoot_ballD(id_team)
+			return c.run_playerD(id_player,id_team)
+		else:
+			return c.return_goal(id_player,id_team)
 
 class FonceurTestStrategy(Strategy):
 	def __init__(self, strength=None):

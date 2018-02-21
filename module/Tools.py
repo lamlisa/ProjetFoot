@@ -24,6 +24,9 @@ class Tools(object):
 	def dist_goal_player(self,id_player,id_team):
 		return self.state.player_state(id_team,id_player).position.distance(self.vect_goal(id_team))
 
+	def dist_ball_player(self,id_player,id_team):
+		return self.state.player_state(id_team,id_player).position.distance(self.state.ball.position)
+
 	def my_goal(self,id_team):
 		if id_team==1:
 			return Vector2D(0,GAME_HEIGHT/2.)
@@ -95,6 +98,21 @@ class Tools(object):
 			return self.state.ball.position.x < (GAME_WIDTH/3.)
 		else:
 			return self.state.ball.position.x > ((2*GAME_WIDTH)/3.)
+
+	def tiers_attaque(self,id_team):
+		if id_team==1:
+			return self.state.ball.position.x > ((2*GAME_WIDTH)/3.)
+		else:
+			return self.state.ball.position.x < (GAME_WIDTH/3.)
+
+	def perimetre_goal(self,id_team):
+		if id_team==1:
+			return self.state.ball.position.x<(GAME_WIDTH)/5 and self.state.ball.position.y<(GAME_HEIGHT)*3/4 and self.state.ball.position.y>(GAME_HEIGHT)/4
+		return self.state.ball.position.x>(GAME_WIDTH)*4/5 and self.state.ball.position.y<(GAME_HEIGHT)*3/4 and self.state.ball.position.y>(GAME_HEIGHT)/4
+
+
+
+
 
 
 
