@@ -42,7 +42,11 @@ class Comportement(object):
 
 	def degage(self):
 		t=Tools(self.state,self.id_team,self.id_player)
-		return SoccerAction(t.player_his_goal().normalize()*0.2, t.player_his_goal().normalize()*6.)
+		decal=30.
+		if t.closest_ennemi().y > t.player().y:
+			return SoccerAction((t.player_his_goal()+Vector2D(0,-decal)).normalize()*0.2, (t.player_his_goal()+Vector2D(0,-decal)).normalize()*6.)
+		else:
+			return SoccerAction((t.player_his_goal()+Vector2D(0,decal)).normalize()*0.2, (t.player_his_goal()+Vector2D(0,decal)).normalize()*6.)
 	
 	def run_anticipe(self):
 		t=Tools(self.state,self.id_team,self.id_player)

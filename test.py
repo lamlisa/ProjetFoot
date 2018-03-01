@@ -6,14 +6,14 @@ from module.strategy import *
 pyteam = SoccerTeam(name="PyTeam")
 thon = SoccerTeam(name="ThonTeam")
 
-#pyteam.add("PyDefenseur",DefenseurStrategy())
-#pyteam.add("PyFonceur1",Fonceur1Strategy())
+pyteam.add("PyDefenseur",DefenseurStrategy())
+pyteam.add("PyFonceur1",Fonceur1Strategy())
 #pyteam.add("PyFonceur2",Fonceur2Strategy())
-pyteam.add("PyFonceur3",Fonceur3Strategy())
+#pyteam.add("PyFonceur3",Fonceur3Strategy())
 
 #thon.add("ThonFonceur1",Fonceur1Strategy())
 #thon.add("ThonFonceur2",Fonceur2Strategy())
-#thon.add("ThonDefenseur",DefenseurStrategy())
+thon.add("ThonDefenseur",DefenseurStrategy())
 thon.add("ThonFonceur3",Fonceur3Strategy())
 
 #Creation d'une partie
