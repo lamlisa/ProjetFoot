@@ -2,7 +2,7 @@ from soccersimulator import SoccerTeam, Simulation, Player
 from soccersimulator import show_simu
 from module.strategy import *
 
-## Creation d'une equipe
+# Creation d'une equipe
 pyteam = SoccerTeam(name="PyTeam")
 thon = SoccerTeam(name="ThonTeam")
 
