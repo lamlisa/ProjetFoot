@@ -67,7 +67,7 @@ class Fonceur3Strategy(Strategy):
 		if state.get_score_team(1)+state.get_score_team(2)>self.cpt2:
 			self.cpt2=state.get_score_team(1)+state.get_score_team(2)
 			self.cpt=0
-		if self.cpt>65:
+		if self.cpt>200:
 			if t.test_shoot():
 				if t.ennemi_in_my_perimeter():
 					return c.dribble()
@@ -86,6 +86,7 @@ class Fonceur3Strategy(Strategy):
 					if t.ennemi_in_my_perimeter():
 						return c.dribble()
 					return c.petit_shoot()
+
 				return c.run()
 			if t.someone():
 					if t.in_my_fifth():
