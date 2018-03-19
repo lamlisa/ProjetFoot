@@ -10,8 +10,12 @@ class Comportement(object):
 
 	def shoot(self):
 		t=Tools(self.state,self.id_team,self.id_player)
-		return SoccerAction(t.ball_goal().normalize()*0.2, t.ball_goal().normalize()*3.)
-	
+		return SoccerAction(t.ball_goal().normalize()*0.2, t.ball_goal().normalize()*4.)
+
+	def shoot_test(self):
+		t=Tools(self.state,self.id_team,self.id_player)
+		return SoccerAction(Vector2D(0,0), t.ball_goal().normalize()*4.)
+
 	def run(self):
 		t=Tools(self.state,self.id_team,self.id_player)
 		return SoccerAction(t.player_ball().normalize()*0.2, Vector2D(0,0))
@@ -54,17 +58,23 @@ class Comportement(object):
 
 	def dribble(self):
 		t=Tools(self.state,self.id_team,self.id_player)
-		decal=30.
+		decal=35.
+		puiss=2.5
 		if t.closest_ennemi().y > t.player().y:
-			return SoccerAction((t.player_his_goal()+Vector2D(0,-decal)).normalize()*0.2, (t.player_his_goal()+Vector2D(0,-decal)).normalize()*1.5)
+			return SoccerAction((t.player_his_goal()+Vector2D(0,-decal)).normalize()*0.01, (t.player_his_goal()+Vector2D(0,-decal)).normalize()*puiss)
 		else:
-			return SoccerAction((t.player_his_goal()+Vector2D(0,decal)).normalize()*0.2, (t.player_his_goal()+Vector2D(0,decal)).normalize()*1.5)
+			return SoccerAction((t.player_his_goal()+Vector2D(0,decal)).normalize()*0.01, (t.player_his_goal()+Vector2D(0,decal)).normalize()*puiss)
 
 	def petit_shoot(self):
 		t=Tools(self.state,self.id_team,self.id_player)
-		return SoccerAction(t.player_his_goal().normalize()*0.2, t.player_his_goal().normalize())
+		return SoccerAction(t.player_his_goal().normalize()*0.01, t.player_his_goal().normalize())
 
-
+	def dribble2(self, strength, decal):
+		t=Tools(self.state,self.id_team,self.id_player)
+		if t.closest_ennemi().y > t.player().y:
+			return SoccerAction((t.player_his_goal()+Vector2D(0,-decal)).normalize()*0.2, (t.player_his_goal()+Vector2D(0,-decal)).normalize()*strength)
+		else:
+			return SoccerAction((t.player_his_goal()+Vector2D(0,decal)).normalize()*0.2, (t.player_his_goal()+Vector2D(0,decal)).normalize()*strength)
 
 
 

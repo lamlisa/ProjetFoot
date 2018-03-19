@@ -47,12 +47,6 @@ class Tools(object):
 	def player_my_goal(self):
 		return self.my_goal()-self.player()
 
-	def player_friend(self):
-		return self.closest_friend()-self.player()
-
-	def player_ennemi(self):
-		return self.closest_ennemi()-self.player()
-
 
 	#Distance
 	def d_goal_player(self):
@@ -60,6 +54,12 @@ class Tools(object):
 
 	def d_ball_player(self):
 		return self.player().distance(self.ball())
+
+	def d_player_friend(self):
+		return self.player().distance(self.closest_friend())
+
+	def d_player_ennemi(self):
+		return self.player().distance(self.closest_ennemi())
 
 
 	#Fonction
@@ -89,13 +89,25 @@ class Tools(object):
 	def ennemi_in_my_perimeter(self):
 		L=[(it, ip) for (it, ip) in self.state.players if it != self.id_team]
 		u = False
-		p = 30.
+		p = 25.
 		for i in range(len(L)):
 			if self.id_team==1:
 				if self.player2(L[i][0],L[i][1]).x > self.player().x and self.player2(L[i][0],L[i][1]).x < self.player().x+p and self.player2(L[i][0],L[i][1]).y > self.player().y-p and self.player2(L[i][0],L[i][1]).y < self.player().y+p:
 					u = True
 			else:
 				if self.player2(L[i][0],L[i][1]).x > self.player().x-p and self.player2(L[i][0],L[i][1]).x < self.player().x and self.player2(L[i][0],L[i][1]).y > self.player().y-p and self.player2(L[i][0],L[i][1]).y < self.player().y+p:
+					u = True
+		return u
+
+	def ennemi_in_my_perimeter2(self, qd):
+		L=[(it, ip) for (it, ip) in self.state.players if it != self.id_team]
+		u = False
+		for i in range(len(L)):
+			if self.id_team==1:
+				if self.player2(L[i][0],L[i][1]).x > self.player().x and self.player2(L[i][0],L[i][1]).x < self.player().x+qd and self.player2(L[i][0],L[i][1]).y > self.player().y-qd and self.player2(L[i][0],L[i][1]).y < self.player().y+qd:
+					u = True
+			else:
+				if self.player2(L[i][0],L[i][1]).x > self.player().x-qd and self.player2(L[i][0],L[i][1]).x < self.player().x and self.player2(L[i][0],L[i][1]).y > self.player().y-qd and self.player2(L[i][0],L[i][1]).y < self.player().y+qd:
 					u = True
 		return u
 
