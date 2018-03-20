@@ -49,7 +49,7 @@ class Tools(object):
 
 
 	#Distance
-	def d_goal_player(self):
+	def d_his_goal_player(self):
 		return self.player().distance(self.his_goal())
 
 	def d_ball_player(self):
@@ -60,6 +60,12 @@ class Tools(object):
 
 	def d_player_ennemi(self):
 		return self.player().distance(self.closest_ennemi())
+
+	def d_my_goal_player(self):
+		return self.player().distance(self.my_goal())
+	
+	def d_my_goal_ball(self):
+		return self.ball().distance(self.my_goal())
 
 
 	#Fonction
@@ -168,6 +174,17 @@ class Tools(object):
 	def someone(self):
 		return len([(it, ip) for (it, ip) in self.state.players if it == self.id_team])>1
 
+	def ennemi_behind(self):
+		ennemi = self.closest_ennemi()
+		if self.id_team == 1:
+			if self.player().x < ennemi.x:
+				return False
+			return True
+		else:
+			if self.player().x < ennemi.x:
+				return True
+			return False
+
 
 	#Joueur
 	def closest_friend(self):
@@ -202,5 +219,6 @@ class Tools(object):
 				s=u
 				v=L[i+1][1]
 		return self.player2(p,v)
+
 
 

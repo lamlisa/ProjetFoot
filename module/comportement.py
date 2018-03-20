@@ -12,10 +12,6 @@ class Comportement(object):
 		t=Tools(self.state,self.id_team,self.id_player)
 		return SoccerAction(t.ball_goal().normalize()*0.2, t.ball_goal().normalize()*4.)
 
-	def shoot_test(self):
-		t=Tools(self.state,self.id_team,self.id_player)
-		return SoccerAction(Vector2D(0,0), t.ball_goal().normalize()*4.)
-
 	def run(self):
 		t=Tools(self.state,self.id_team,self.id_player)
 		return SoccerAction(t.player_ball().normalize()*0.2, Vector2D(0,0))
@@ -36,14 +32,6 @@ class Comportement(object):
 		t=Tools(self.state,self.id_team,self.id_player)
 		return SoccerAction(t.player_my_goal(), Vector2D(0,0))
 
-	def shoot2(self,strength):
-		t=Tools(self.state,self.id_team,self.id_player)
-		return SoccerAction(t.player_his_goal().normalize()*0.2, t.g(strength,t.d_goal_player())*(t.player_his_goal().normalize()))
-
-	def shoot3(self,strength):
-		t=Tools(self.state,self.id_team,self.id_player)
-		return SoccerAction(t.player_his_goal().normalize()*0.2, t.player_his_goal().normalize()*strength)
-
 	def degage(self):
 		t=Tools(self.state,self.id_team,self.id_player)
 		decal=30.
@@ -58,8 +46,8 @@ class Comportement(object):
 
 	def dribble(self):
 		t=Tools(self.state,self.id_team,self.id_player)
-		decal=35.
-		puiss=2.5
+		decal=40.
+		puiss=1.5
 		if t.closest_ennemi().y > t.player().y:
 			return SoccerAction((t.player_his_goal()+Vector2D(0,-decal)).normalize()*0.01, (t.player_his_goal()+Vector2D(0,-decal)).normalize()*puiss)
 		else:
@@ -69,6 +57,13 @@ class Comportement(object):
 		t=Tools(self.state,self.id_team,self.id_player)
 		return SoccerAction(t.player_his_goal().normalize()*0.01, t.player_his_goal().normalize())
 
+	def shoot2(self,strength):
+		t=Tools(self.state,self.id_team,self.id_player)
+		return SoccerAction(t.player_his_goal().normalize()*0.2, t.g(strength,t.d_goal_player())*(t.player_his_goal().normalize()))
+
+	def shoot3(self,strength):
+		t=Tools(self.state,self.id_team,self.id_player)
+		return SoccerAction(t.player_his_goal().normalize()*0.2, t.player_his_goal().normalize()*strength)
 	def dribble2(self, strength, decal):
 		t=Tools(self.state,self.id_team,self.id_player)
 		if t.closest_ennemi().y > t.player().y:
