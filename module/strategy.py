@@ -20,7 +20,6 @@ class Fonceur1Strategy(Strategy):
 			return SoccerAction(Vector2D(0,0),Vector2D(0,0))
 		return c.run()
 
-
 class Fonceur3Strategy(Strategy):
 	def __init__(self,cpt=0, cpt2=0):
 		Strategy.__init__(self,"Fonceur3")
@@ -34,22 +33,63 @@ class Fonceur3Strategy(Strategy):
 			self.cpt=0
 		if self.cpt>100:
 			if t.test_shoot():
-				if t.ennemi_in_my_perimeter():
-					return c.dribble()
-				if t.in_his_fifth():
-					return c.shoot()
-				return c.petit_shoot()
+				if not t.ennemi_behind():
+					if t.ennemi_in_my_small_perimeter():
+						return c.dribble(5.)
+					return c.dribble(1.5)
+				#if t.in_his_fifth():
+					#return c.shoot()
+				return c.shoot()
 			else:
 				return c.run_anticipe()
 		else:
 			self.cpt+=1
 			if t.in_my_half():
 				if t.test_shoot():
-					if t.ennemi_in_my_perimeter():
-						return c.dribble()
-					return c.petit_shoot()
+					if not t.ennemi_behind():
+						return c.dribble(1.5)
+					return c.shoot()
 				return c.run_anticipe()
 			return SoccerAction(Vector2D(0,0),Vector2D(0,0))
+
+
+
+class Fonceur3_modifStrategy(Strategy):
+	def __init__(self,cpt=0, cpt2=0):
+		Strategy.__init__(self,"Fonceur3_modif")
+		self.cpt = cpt
+		self.cpt2=cpt2
+	def compute_strategy(self,state,id_team,id_player):
+		t = Tools(state,id_team,id_player)
+		c = Comportement(state,id_team,id_player)
+		if state.get_score_team(1)+state.get_score_team(2)>self.cpt2:
+			self.cpt2=state.get_score_team(1)+state.get_score_team(2)
+			self.cpt=0
+		if self.cpt>100:
+			if t.test_shoot():
+				if not t.ennemi_behind():
+					if t.ennemi_in_my_small_perimeter():
+						if t.in_his_third():
+							return c.dribble(1.5)
+						return c.dribble(5.)
+					if t.ennemi_in_my_perimeter():
+						return c.dribble(1.5)
+					return c.petit_shoot()
+				return c.shoot()
+			else:
+				#if t.in_my_third():
+					#return c.return_attaquant_defense()
+				return c.run_anticipe()
+		else:
+			self.cpt+=1
+			if t.in_my_half():
+				if t.test_shoot():
+					if not t.ennemi_behind():
+						return c.dribble(1.5)
+					return c.shoot()
+				return c.run_anticipe()
+			return SoccerAction(Vector2D(0,0),Vector2D(0,0))
+
 
 class DefenseurStrategy(Strategy):
 	def __init__(self):
@@ -59,14 +99,11 @@ class DefenseurStrategy(Strategy):
 		c = Comportement(state,id_team,id_player)
 		if t.in_my_quarter():
 			if t.test_shoot():
-				if t.someone():
-					return c.passe()
-				else:
-					return c.degage()
+				return c.degage()
 			else:
-				return c.run()
+				return c.run_anticipe()
 		else:
-			return c.return_goal()
+			return c.return_defense()
 
 class GoalStrategy(Strategy):
 	def __init__(self):

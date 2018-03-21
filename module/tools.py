@@ -47,6 +47,16 @@ class Tools(object):
 	def player_my_goal(self):
 		return self.my_goal()-self.player()
 
+	def player_my_defense(self):
+		if self.id_team==1:
+			return Vector2D(GAME_WIDTH*0.1, self.ball().y)-self.player()
+		return Vector2D(GAME_WIDTH*0.9, self.ball().y)-self.player()
+
+	def attaquant_my_defense(self):
+		if self.id_team==1:
+			return Vector2D(GAME_WIDTH/3., self.ball().y)-self.player()
+		return Vector2D(GAME_WIDTH*(2/3.), self.ball().y)-self.player()
+
 
 	#Distance
 	def d_his_goal_player(self):
@@ -96,6 +106,26 @@ class Tools(object):
 		L=[(it, ip) for (it, ip) in self.state.players if it != self.id_team]
 		u = False
 		p = 25.
+		for i in range(len(L)):
+			if self.id_team==1:
+				if self.player2(L[i][0],L[i][1]).x > self.player().x and self.player2(L[i][0],L[i][1]).x < self.player().x+p and self.player2(L[i][0],L[i][1]).y > self.player().y-p and self.player2(L[i][0],L[i][1]).y < self.player().y+p:
+					u = True
+			else:
+				if self.player2(L[i][0],L[i][1]).x > self.player().x-p and self.player2(L[i][0],L[i][1]).x < self.player().x and self.player2(L[i][0],L[i][1]).y > self.player().y-p and self.player2(L[i][0],L[i][1]).y < self.player().y+p:
+					u = True
+		return u
+
+	def ball_in_my_perimeter(self):
+		p = 10.
+		if self.id_team==1:
+			return self.ball().x > self.player().x and self.ball().x < self.player().x+p and self.ball().y > self.player().y-p and self.ball().y < self.player().y+p
+		else:
+			return self.ball().x > self.player().x-p and self.ball().x < self.player().x and self.ball().y > self.player().y-p and self.ball().y < self.player().y+p	
+
+	def ennemi_in_my_small_perimeter(self):
+		L=[(it, ip) for (it, ip) in self.state.players if it != self.id_team]
+		u = False
+		p = 10.
 		for i in range(len(L)):
 			if self.id_team==1:
 				if self.player2(L[i][0],L[i][1]).x > self.player().x and self.player2(L[i][0],L[i][1]).x < self.player().x+p and self.player2(L[i][0],L[i][1]).y > self.player().y-p and self.player2(L[i][0],L[i][1]).y < self.player().y+p:
@@ -177,9 +207,9 @@ class Tools(object):
 	def ennemi_behind(self):
 		ennemi = self.closest_ennemi()
 		if self.id_team == 1:
-			if self.player().x < ennemi.x:
-				return False
-			return True
+			if self.player().x > ennemi.x:
+				return True
+			return False
 		else:
 			if self.player().x < ennemi.x:
 				return True

@@ -32,6 +32,14 @@ class Comportement(object):
 		t=Tools(self.state,self.id_team,self.id_player)
 		return SoccerAction(t.player_my_goal(), Vector2D(0,0))
 
+	def return_defense(self):
+		t=Tools(self.state,self.id_team,self.id_player)
+		return SoccerAction(t.player_my_defense(), Vector2D(0,0))
+
+	def return_attaquant_defense(self):
+		t=Tools(self.state,self.id_team,self.id_player)
+		return SoccerAction(t.attaquant_my_defense(), Vector2D(0,0))
+
 	def degage(self):
 		t=Tools(self.state,self.id_team,self.id_player)
 		decal=30.
@@ -42,12 +50,13 @@ class Comportement(object):
 	
 	def run_anticipe(self):
 		t=Tools(self.state,self.id_team,self.id_player)
+		"""if t.ball_in_my_perimeter():
+			return SoccerAction(((0.6*self.state.ball.vitesse+t.ball())-t.player()).normalize()*0.2, Vector2D(0,0))"""
 		return SoccerAction(((5*self.state.ball.vitesse+t.ball())-t.player()).normalize()*0.2, Vector2D(0,0))
 
-	def dribble(self):
+	def dribble(self,puiss):
 		t=Tools(self.state,self.id_team,self.id_player)
-		decal=40.
-		puiss=1.5
+		decal=50.
 		if t.closest_ennemi().y > t.player().y:
 			return SoccerAction((t.player_his_goal()+Vector2D(0,-decal)).normalize()*0.01, (t.player_his_goal()+Vector2D(0,-decal)).normalize()*puiss)
 		else:
