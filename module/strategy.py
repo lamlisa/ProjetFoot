@@ -133,7 +133,7 @@ class FonceurTestStrategy(Strategy):
 		return c.run()
 
 class DribbleurTestStrategy(Strategy):
-	def __init__(self, strength, decal, qd):
+	def __init__(self, strength=None, decal=None, qd=None):
 		Strategy.__init__(self,"Dribbleur Test")
 		self.strength = strength
 		self.decal= decal
@@ -142,10 +142,12 @@ class DribbleurTestStrategy(Strategy):
 		t=Tools(state,id_team,id_player)
 		c = Comportement(state,id_team,id_player)
 		if t.test_shoot():
-			if t.ennemi_in_my_perimeter2(self.qd):
-				return c.dribble2(self.strength, self.decal)
+			if not t.ennemi_behind():
+				if t.ennemi_in_my_perimeter2(self.qd):
+					return c.dribble2(self.strength, self.decal)
+				return c.petit_shoot()
 			return c.shoot()
 		else:
-			return c.run()
+			return c.run_anticipe()
 
 

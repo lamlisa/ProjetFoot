@@ -9,8 +9,8 @@ def get_team(nb_players):
 		myteam.add("Joueur 1", Fonceur3_modifStrategy())
 		myteam.add("Joueur 2", DefenseurStrategy())
 	if nb_players == 4:
-		myteam.add("Joueur 1",Fonceur3_modifStrategy())
-		myteam.add("Joueur 2",Fonceur3_modifStrategy())
+		myteam.add("Joueur 1",DefenseurStrategy())
+		myteam.add("Joueur 2",DefenseurStrategy())
 		myteam.add("Joueur 3",Fonceur3_modifStrategy())
 		myteam.add("Joueur 4",Fonceur3_modifStrategy())
 	return myteam	

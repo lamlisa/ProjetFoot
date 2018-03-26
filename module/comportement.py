@@ -68,11 +68,12 @@ class Comportement(object):
 
 	def shoot2(self,strength):
 		t=Tools(self.state,self.id_team,self.id_player)
-		return SoccerAction(t.player_his_goal().normalize()*0.2, t.g(strength,t.d_goal_player())*(t.player_his_goal().normalize()))
+		return SoccerAction(t.player_his_goal().normalize()*0.2, t.g(strength,t.d_his_goal_player())*(t.player_his_goal().normalize()))
 
 	def shoot3(self,strength):
 		t=Tools(self.state,self.id_team,self.id_player)
 		return SoccerAction(t.player_his_goal().normalize()*0.2, t.player_his_goal().normalize()*strength)
+
 	def dribble2(self, strength, decal):
 		t=Tools(self.state,self.id_team,self.id_player)
 		if t.closest_ennemi().y > t.player().y:
