@@ -52,7 +52,59 @@ class Fonceur3Strategy(Strategy):
 				return c.run_anticipe()
 			return SoccerAction(Vector2D(0,0),Vector2D(0,0))
 
+class Fonceur3_topStrategy(Strategy):
+	def __init__(self,cpt=0, cpt2=0):
+		Strategy.__init__(self,"Fonceur3")
+		self.cpt = cpt
+		self.cpt2=cpt2
+	def compute_strategy(self,state,id_team,id_player):
+		t = Tools(state,id_team,id_player)
+		c = Comportement(state,id_team,id_player)
+		if state.get_score_team(1)+state.get_score_team(2)>self.cpt2:
+			self.cpt2=state.get_score_team(1)+state.get_score_team(2)
+			self.cpt=0
+		if t.ball_in_top():
+			if t.test_shoot():
+				if not t.ennemi_behind():
+					if t.ennemi_in_my_small_perimeter():
+						if not t.ennemi_in_my_friend_small_perimeter():
+							return c.passe(3.)
+						return c.dribble(5.)
+					return c.dribble(1.5)
+				if t.in_his_fifth():
+					return c.shoot()
+				return c.petit_shoot()
+			else:
+				return c.run_anticipe()
+		else:
+			return c.follow_ball_top()
 
+class Fonceur3_downStrategy(Strategy):
+	def __init__(self,cpt=0, cpt2=0):
+		Strategy.__init__(self,"Fonceur3")
+		self.cpt = cpt
+		self.cpt2=cpt2
+	def compute_strategy(self,state,id_team,id_player):
+		t = Tools(state,id_team,id_player)
+		c = Comportement(state,id_team,id_player)
+		if state.get_score_team(1)+state.get_score_team(2)>self.cpt2:
+			self.cpt2=state.get_score_team(1)+state.get_score_team(2)
+			self.cpt=0
+		if not t.ball_in_top():
+			if t.test_shoot():
+				if not t.ennemi_behind():
+					if t.ennemi_in_my_small_perimeter():
+						if not t.ennemi_in_my_friend_small_perimeter():
+							return c.passe(3.)
+						return c.dribble(5.)
+					return c.dribble(1.5)
+				if t.in_his_fifth():
+					return c.shoot()
+				return c.petit_shoot()
+			else:
+				return c.run_anticipe()
+		else:
+			return c.follow_ball_down()
 
 class Fonceur3_modifStrategy(Strategy):
 	def __init__(self,cpt=0, cpt2=0):
@@ -104,6 +156,38 @@ class DefenseurStrategy(Strategy):
 				return c.run_anticipe()
 		else:
 			return c.return_defense()
+
+class Defenseur_topStrategy(Strategy):
+	def __init__(self):
+		Strategy.__init__(self,"Defenseur")
+	def compute_strategy(self,state,id_team,id_player):
+		t = Tools(state,id_team,id_player)
+		c = Comportement(state,id_team,id_player)
+		if t.in_my_third():
+			if t.test_shoot():
+				return c.degage()
+			else:
+				return c.run_anticipe()
+		else:
+			if t.ball_in_top():
+				return c.return_defense_top()
+			return c.return_defense_milieu()
+
+class Defenseur_downStrategy(Strategy):
+	def __init__(self):
+		Strategy.__init__(self,"Defenseur")
+	def compute_strategy(self,state,id_team,id_player):
+		t = Tools(state,id_team,id_player)
+		c = Comportement(state,id_team,id_player)
+		if t.in_my_third():
+			if t.test_shoot():
+				return c.degage()
+			else:
+				return c.run_anticipe()
+		else:
+			if not t.ball_in_top():
+				return c.return_defense_down()
+			return c.return_defense_milieu()
 
 class GoalStrategy(Strategy):
 	def __init__(self):
