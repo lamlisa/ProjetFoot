@@ -33,7 +33,7 @@ class Fonceur3Strategy(Strategy):
 			self.cpt=0
 		if self.cpt>100:
 			if t.test_shoot():
-				if not t.ennemi_behind():
+				if not t.closest_ennemi_behind():
 					if t.ennemi_in_my_small_perimeter():
 						return c.dribble(5.)
 					return c.dribble(1.5)
@@ -65,7 +65,7 @@ class Fonceur3_topStrategy(Strategy):
 			self.cpt=0
 		if t.ball_in_top():
 			if t.test_shoot():
-				if not t.ennemi_behind():
+				if not t.closest_ennemi_behind():
 					if t.ennemi_in_my_small_perimeter():
 						if not t.ennemi_in_my_friend_small_perimeter():
 							return c.passe(3.)
@@ -92,7 +92,7 @@ class Fonceur3_downStrategy(Strategy):
 			self.cpt=0
 		if not t.ball_in_top():
 			if t.test_shoot():
-				if not t.ennemi_behind():
+				if not t.closest_ennemi_behind():
 					if t.ennemi_in_my_small_perimeter():
 						if not t.ennemi_in_my_friend_small_perimeter():
 							return c.passe(3.)
@@ -149,8 +149,10 @@ class DefenseurStrategy(Strategy):
 	def compute_strategy(self,state,id_team,id_player):
 		t = Tools(state,id_team,id_player)
 		c = Comportement(state,id_team,id_player)
-		if t.in_my_quarter():
+		if t.in_my_third():
 			if t.test_shoot():
+				#if not t.ennemi_in_my_friend_small_perimeter():
+					#return c.passe(3.)
 				return c.degage()
 			else:
 				return c.run_anticipe()
@@ -195,12 +197,13 @@ class GoalStrategy(Strategy):
 	def compute_strategy(self,state,id_team,id_player):
 		t = Tools(state,id_team,id_player)
 		c = Comportement(state,id_team,id_player)
-		if t.goal_perimeter(): 
+		if t.in_goal_perimeter(): 
 			if t.test_shoot():
-				if t.someone():
-					return c.passe()
-				else:
-					return c.degage()
+				#if t.someone():
+					#return c.passe()
+				#else:
+					#return c.degage()
+				return c.degage()
 			return c.run_anticipe()
 		else:
 			return c.return_goal()
@@ -226,7 +229,7 @@ class DribbleurTestStrategy(Strategy):
 		t=Tools(state,id_team,id_player)
 		c = Comportement(state,id_team,id_player)
 		if t.test_shoot():
-			if not t.ennemi_behind():
+			if not t.closest_ennemi_behind():
 				if t.ennemi_in_my_perimeter2(self.qd):
 					return c.dribble2(self.strength, self.decal)
 				return c.petit_shoot()
@@ -234,4 +237,26 @@ class DribbleurTestStrategy(Strategy):
 		else:
 			return c.run_anticipe()
 
+class Fonceur3TestStrategy(Strategy):
+	def __init__(self, strD1=None, strD2=None, strPs=None, decal=None, qd=None):
+		Strategy.__init__(self,"Fonceur Test")
+		self.strD1 = strD1
+		self.strD2 = strD2
+		self.strPs = strPs
+		self.decal= decal
+		self.qd=qd
+	def compute_strategy(self,state,id_team,id_player):
+		t = Tools(state,id_team,id_player)
+		c = Comportement(state,id_team,id_player)
+		if t.test_shoot():
+			if not t.closest_ennemi_behind():
+				if t.ennemi_in_my_perimeter2(self.qd):
+					return c.dribble(self.strD1)
+				return c.dribble(self.strD2)
+			if t.in_his_fifth():
+				return c.shoot()
+			return c.petit_shoot2(self.strPs)
+		else:
+			return c.run_anticipe()
+	
 

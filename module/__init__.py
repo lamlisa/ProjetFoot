@@ -1,4 +1,4 @@
-from .strategy import Fonceur3Strategy, DefenseurStrategy, Fonceur3_modifStrategy, Defenseur_topStrategy, Defenseur_downStrategy, Fonceur3_downStrategy, Fonceur3_topStrategy
+from .strategy import Fonceur3Strategy, DefenseurStrategy, Fonceur3_modifStrategy, Defenseur_topStrategy, Defenseur_downStrategy, Fonceur3_downStrategy, Fonceur3_topStrategy, GoalStrategy
 from soccersimulator import SoccerTeam
 
 def get_team(nb_players):

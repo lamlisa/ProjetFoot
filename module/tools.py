@@ -253,7 +253,7 @@ class Tools(object):
 	def someone(self):
 		return len([(it, ip) for (it, ip) in self.state.players if it == self.id_team])>1
 
-	def ennemi_behind(self):
+	def closest_ennemi_behind(self):
 		ennemi = self.closest_ennemi()
 		if self.id_team == 1:
 			if self.player().x > ennemi.x:
@@ -264,6 +264,20 @@ class Tools(object):
 				return True
 			return False
 
+	def ennemi_behind(self):
+		L = [(it, ip) for (it, ip) in self.state.players if it != self.id_team]
+		u = True
+		p = self.his_team()
+		if self.id_team == 1:
+			for i in range(len(L)-1):
+				if self.player().x < self.player2(p,L[i][1]).x:
+					u = False
+		else:
+			for i in range(len(L)-1):
+				if self.player().x > self.player2(p,L[i][1]).x:
+					u = False
+		return u
+			
 	def ball_in_top(self):
 		return self.ball().y > GAME_HEIGHT/2.
 

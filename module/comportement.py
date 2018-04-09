@@ -62,7 +62,7 @@ class Comportement(object):
 
 	def degage(self):
 		t=Tools(self.state,self.id_team,self.id_player)
-		decal=30.
+		decal=40.
 		if t.closest_ennemi().y > t.player().y:
 			return SoccerAction((t.player_his_goal()+Vector2D(0,-decal)).normalize()*0.2, (t.player_his_goal()+Vector2D(0,-decal)).normalize()*6.)
 		else:
@@ -74,6 +74,10 @@ class Comportement(object):
 			return SoccerAction(((0.6*self.state.ball.vitesse+t.ball())-t.player()).normalize()*0.2, Vector2D(0,0))"""
 		return SoccerAction(((5*self.state.ball.vitesse+t.ball())-t.player()).normalize()*0.2, Vector2D(0,0))
 
+	def run_anticipe2(self,n):
+		t=Tools(self.state,self.id_team,self.id_player)
+		return SoccerAction(((n*self.state.ball.vitesse+t.ball())-t.player()).normalize()*0.2, Vector2D(0,0))
+	
 	def dribble(self,puiss):
 		t=Tools(self.state,self.id_team,self.id_player)
 		decal=50.
@@ -85,6 +89,10 @@ class Comportement(object):
 	def petit_shoot(self):
 		t=Tools(self.state,self.id_team,self.id_player)
 		return SoccerAction(t.player_his_goal().normalize()*0.01, t.player_his_goal().normalize())
+
+	def petit_shoot2(self, strength):
+		t=Tools(self.state,self.id_team,self.id_player)
+		return SoccerAction(t.player_his_goal().normalize()*0.01, t.player_his_goal().normalize()*strength)
 
 	def shoot2(self,strength):
 		t=Tools(self.state,self.id_team,self.id_player)
@@ -100,7 +108,5 @@ class Comportement(object):
 			return SoccerAction((t.player_his_goal()+Vector2D(0,-decal)).normalize()*0.2, (t.player_his_goal()+Vector2D(0,-decal)).normalize()*strength)
 		else:
 			return SoccerAction((t.player_his_goal()+Vector2D(0,decal)).normalize()*0.2, (t.player_his_goal()+Vector2D(0,decal)).normalize()*strength)
-
-
 
 
