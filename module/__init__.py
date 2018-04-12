@@ -1,4 +1,4 @@
-from .strategy import Fonceur3Strategy, DefenseurStrategy, Fonceur3_modifStrategy, Defenseur_topStrategy, Defenseur_downStrategy, Fonceur3_downStrategy, Fonceur3_topStrategy, GoalStrategy
+from .strategy import Fonceur3Strategy, DefenseurStrategy, Defenseur_topStrategy, Defenseur_downStrategy, Fonceur3_downStrategy, Fonceur3_topStrategy, GoalStrategy, Defenseur_2v2Strategy, Fonceur3_2v2Strategy
 from soccersimulator import SoccerTeam
 
 def get_team(nb_players):
@@ -6,8 +6,8 @@ def get_team(nb_players):
 	if nb_players == 1:
 		myteam.add("Joueur " ,Fonceur3Strategy())
 	if nb_players == 2:
-		myteam.add("Joueur 1", Fonceur3_modifStrategy())
-		myteam.add("Joueur 2", DefenseurStrategy())
+		myteam.add("Joueur 1", Fonceur3_2v2Strategy())
+		myteam.add("Joueur 2", Defenseur_2v2Strategy())
 	if nb_players == 4:
 		myteam.add("Joueur 1",Defenseur_downStrategy())
 		myteam.add("Joueur 2",Defenseur_topStrategy())

@@ -123,6 +123,18 @@ class Tools(object):
 		else:
 			return self.ball().x < (GAME_WIDTH/2.)
 
+	def in_his_goal_perimeter(self):
+		b = self.ball()
+		p = 15.
+		if self.id_team == 1:
+			if b.x > (GAME_WIDTH-p) and b.y > (GAME_HEIGHT/2.)-p and b.y < (GAME_HEIGHT/2.)+p:
+				return True
+			return False
+		else:
+			if b.x < p and b.y > (GAME_HEIGHT/2.)-p and b.y < (GAME_HEIGHT/2.)+p:
+				return True
+			return False
+
 	def ennemi_in_my_perimeter(self):
 		L=[(it, ip) for (it, ip) in self.state.players if it != self.id_team]
 		u = False
@@ -156,7 +168,7 @@ class Tools(object):
 					u = True
 		return u
 
-	def ennemi_in_my_friend_small_perimeter(self):
+	def ennemi_in_my_closest_friend_small_perimeter(self):
 		f = self.closest_friend()
 		L=[(it, ip) for (it, ip) in self.state.players if it != self.id_team]
 		u = False
@@ -170,7 +182,7 @@ class Tools(object):
 					u = True
 		return u
 
-	def ennemi_in_my_friend_perimeter(self):
+	def ennemi_in_my_closest_friend_perimeter(self):
 		f = self.closest_friend()
 		L=[(it, ip) for (it, ip) in self.state.players if it != self.id_team]
 		u = False
@@ -206,6 +218,26 @@ class Tools(object):
 					u = True
 			else:
 				if self.player2(L[i][0],L[i][1]).x > self.player().x-p and self.player2(L[i][0],L[i][1]).x < self.player().x and self.player2(L[i][0],L[i][1]).y > self.player().y-p and self.player2(L[i][0],L[i][1]).y < self.player().y+p:
+					u = True
+		return u
+
+	def ennemi_in_my_half(self):
+		L = [(it, ip) for (it, ip) in self.state.players if it != self.id_team]
+		u = False
+		p = self.his_team()
+		if self.id_team == 1:
+			if len(L)==1:
+				if self.player2(p,L[0][1]).x < GAME_WIDTH/2.:
+					return True
+			for i in range(len(L)-1):
+				if self.player2(p,L[i][1]).x < GAME_WIDTH/2. :
+					u = True
+		else:
+			if len(L)==1:
+				if self.player2(p,L[0][1]).x > GAME_WIDTH/2.:
+					return True
+			for i in range(len(L)-1):
+				if self.player2(p,L[i][1]).x > GAME_WIDTH/2.:
 					u = True
 		return u
 
@@ -264,15 +296,21 @@ class Tools(object):
 				return True
 			return False
 
-	def ennemi_behind(self):
+	def all_ennemi_behind(self):
 		L = [(it, ip) for (it, ip) in self.state.players if it != self.id_team]
 		u = True
 		p = self.his_team()
 		if self.id_team == 1:
+			if len(L)==1:
+				if self.player().x < self.player2(p,L[0][1]).x:
+					return False
 			for i in range(len(L)-1):
 				if self.player().x < self.player2(p,L[i][1]).x:
 					u = False
 		else:
+			if len(L)==1:
+				if self.player().x > self.player2(p,L[0][1]).x:
+					return False
 			for i in range(len(L)-1):
 				if self.player().x > self.player2(p,L[i][1]).x:
 					u = False
