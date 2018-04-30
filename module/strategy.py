@@ -6,7 +6,7 @@ class RandomStrategy(Strategy):
 	def __init__(self):
         	Strategy.__init__(self,"Random")
 	def compute_strategy(self,state,id_team,id_player):
-        	return SoccerAction(Vector2D.create_random(-0.5,0.5),Vector2D.create_random(-0.5,0.5))
+		return SoccerAction(Vector2D.create_random(-0.5,0.5),Vector2D.create_random(-0.5,0.5))
 
 class Fonceur1Strategy(Strategy):
 	def __init__(self):
@@ -37,20 +37,26 @@ class Fonceur3Strategy(Strategy):
 					if t.ennemi_in_my_small_perimeter():
 						return c.dribble(5.)
 					return c.dribble(1.5)
-				#if t.in_his_goal_perimeter():
-					#return c.shoot()
-				return c.shoot()
+				if t.in_his_goal_perimeter():
+					return c.shoot()
+				return c.shoot3(2.)
 			else:
 				return c.run_anticipe()
 		else:
 			self.cpt+=1
 			if t.in_my_half():
 				if t.test_shoot():
-					if not t.all_ennemi_behind():
-						return c.dribble(5.)
-					return c.dribble(1.5)
-				return c.run_anticipe()
-			return SoccerAction(Vector2D(0,0),Vector2D(0,0))
+					if not t.closest_ennemi_behind():
+						if t.ennemi_in_my_small_perimeter():
+							return c.dribble(5.)
+						return c.dribble(1.5)
+					if t.in_his_goal_perimeter():
+						return c.shoot()
+					return c.petit_shoot2(2.)
+				else:
+					return c.run_anticipe()
+			else:
+				return SoccerAction(Vector2D(0,0),Vector2D(0,0))
 
 class Fonceur3_2v2Strategy(Strategy):
 	def __init__(self,cpt=0, cpt2=0):
@@ -71,7 +77,7 @@ class Fonceur3_2v2Strategy(Strategy):
 					return c.dribble(1.5)
 				if t.in_his_goal_perimeter():
 					return c.shoot()
-				return c.petit_shoot2(2.)
+				return c.shoot3(2.)
 			else:
 				return c.run_anticipe()
 		else:
