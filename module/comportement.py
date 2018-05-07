@@ -10,7 +10,7 @@ class Comportement(object):
 
 	def shoot(self):
 		t=Tools(self.state,self.id_team,self.id_player)
-		return SoccerAction(t.ball_goal().normalize()*0.2, t.ball_goal().normalize()*4.)
+		return SoccerAction(t.ball_his_goal().normalize()*0.2, t.ball_his_goal().normalize()*4.)
 
 	def run(self):
 		t=Tools(self.state,self.id_team,self.id_player)
@@ -111,8 +111,11 @@ class Comportement(object):
 
 	def follow_fonceur(self):
 		t=Tools(self.state,self.id_team,self.id_player)
+		p = 25.
 		if self.id_team == 1:
-			return SoccerAction(Vector2D(t.closest_friend().x - 15., t.ball().y)-t.player(), Vector2D(0,0))
+			return SoccerAction(Vector2D(t.closest_friend().x - p, t.ball().y)-t.player(), Vector2D(0,0))
 		else:
-			return SoccerAction(Vector2D(t.closest_friend().x + 15., t.ball().y)-t.player(), Vector2D(0,0))
+			return SoccerAction(Vector2D(t.closest_friend().x + p, t.ball().y)-t.player(), Vector2D(0,0))
+
+		
 

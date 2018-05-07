@@ -6,8 +6,8 @@ def get_team(nb_players):
 	if nb_players == 1:
 		myteam.add("Joueur " ,Fonceur3Strategy())
 	if nb_players == 2:
-		myteam.add("Joueur 1", Fonceur3_2v2Strategy())
-		myteam.add("Joueur 2", Defenseur_2v2Strategy())
+		myteam.add("Fonceur3_2v2", Fonceur3_2v2Strategy())
+		myteam.add("Defenseur_2v2", Defenseur_2v2Strategy())
 	if nb_players == 4:
 		myteam.add("Joueur 1",Defenseur_downStrategy())
 		myteam.add("Joueur 2",Defenseur_topStrategy())

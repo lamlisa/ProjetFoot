@@ -35,7 +35,7 @@ class Tools(object):
 
 
 	#Vecteur
-	def ball_goal(self):
+	def ball_his_goal(self):
 		return self.his_goal()-self.ball()
 
 	def player_ball(self):
@@ -111,19 +111,19 @@ class Tools(object):
 	def test_shoot(self):
 		return self.ball().distance(self.player())<(PLAYER_RADIUS+BALL_RADIUS)
 
-	def in_my_half(self):
+	def ball_in_my_half(self):
 		if self.id_team==1:
 			return self.ball().x < (GAME_WIDTH/2.)
 		else:
 			return self.ball().x > (GAME_WIDTH/2.)
 
-	def in_his_half(self):
+	def ball_in_his_half(self):
 		if self.id_team==1:
 			return self.ball().x > (GAME_WIDTH/2.)
 		else:
 			return self.ball().x < (GAME_WIDTH/2.)
 
-	def in_his_goal_perimeter(self):
+	def ball_in_his_goal_perimeter(self):
 		b = self.ball()
 		p = 15.
 		if self.id_team == 1:
@@ -241,43 +241,43 @@ class Tools(object):
 					u = True
 		return u
 
-	def in_my_third(self):
+	def ball_in_my_third(self):
 		if self.id_team==1:
 			return self.state.ball.position.x < (GAME_WIDTH/3.)
 		else:
 			return self.state.ball.position.x > ((2*GAME_WIDTH)/3.)
 
-	def in_his_third(self):
+	def ball_in_his_third(self):
 		if self.id_team==1:
 			return self.state.ball.position.x > ((2*GAME_WIDTH)/3.)
 		else:
 			return self.state.ball.position.x < (GAME_WIDTH/3.)
 
-	def in_my_quarter(self):
+	def ball_in_my_quarter(self):
 		if self.id_team==1:
 			return self.state.ball.position.x < (GAME_WIDTH/4.)
 		else:
 			return self.state.ball.position.x > ((3*GAME_WIDTH)/4.)
 
-	def in_his_quarter(self):
+	def ball_in_his_quarter(self):
 		if self.id_team==1:
 			return self.state.ball.position.x > ((3*GAME_WIDTH)/4.)
 		else:
 			return self.state.ball.position.x < (GAME_WIDTH/4.)
 
-	def in_my_fifth(self):
+	def ball_in_my_fifth(self):
 		if self.id_team==1:
 			return self.state.ball.position.x < (GAME_WIDTH/5.)
 		else:
 			return self.state.ball.position.x > ((4*GAME_WIDTH)/5.)
 
-	def in_his_fifth(self):
+	def ball_in_his_fifth(self):
 		if self.id_team==1:
 			return self.state.ball.position.x > ((4*GAME_WIDTH)/5.)
 		else:
 			return self.state.ball.position.x < (GAME_WIDTH/5.)
 
-	def in_goal_perimeter(self):
+	def ball_in_my_goal_perimeter(self):
 		if self.id_team==1:
 			return self.ball().x<(GAME_WIDTH)/5 and self.ball().y<(GAME_HEIGHT)*3/4 and self.ball().y>(GAME_HEIGHT)/4
 		return self.ball().x>(GAME_WIDTH)*4/5 and self.ball().y<(GAME_HEIGHT)*3/4 and self.ball().y>(GAME_HEIGHT)/4
@@ -304,14 +304,14 @@ class Tools(object):
 			if len(L)==1:
 				if self.player().x < self.player2(p,L[0][1]).x:
 					return False
-			for i in range(len(L)-1):
+			for i in range(len(L)):
 				if self.player().x < self.player2(p,L[i][1]).x:
 					u = False
 		else:
 			if len(L)==1:
 				if self.player().x > self.player2(p,L[0][1]).x:
 					return False
-			for i in range(len(L)-1):
+			for i in range(len(L)):
 				if self.player().x > self.player2(p,L[i][1]).x:
 					u = False
 		return u
@@ -319,10 +319,24 @@ class Tools(object):
 	def ball_in_top(self):
 		return self.ball().y > GAME_HEIGHT/2.
 
-	def friend_in_front(self):
+	def closest_friend_in_front(self):
 		if self.id_team==1:
 			return self.closest_friend().x > self.player().x
 		return self.closest_friend().x < self.player().x
+
+	def ennemi_in_ball_perimeter():
+		b = self.ball()
+		L=[(it, ip) for (it, ip) in self.state.players if it != self.id_team]
+		u = False
+		p = 25.
+		for i in range(len(L)):
+			if self.id_team==1:
+				if self.player2(L[i][0],L[i][1]).x > b.x and self.player2(L[i][0],L[i][1]).x < b.x+p and self.player2(L[i][0],L[i][1]).y > b.y-p and self.player2(L[i][0],L[i][1]).y < b.y+p:
+					u = True
+			else:
+				if self.player2(L[i][0],L[i][1]).x > b.x-p and self.player2(L[i][0],L[i][1]).x < b.x and self.player2(L[i][0],L[i][1]).y > b.y-p and self.player2(L[i][0],L[i][1]).y < b.y+p:
+					u = True
+		return u
 
 
 	#Joueur
