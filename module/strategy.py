@@ -38,11 +38,8 @@ class Fonceur3Strategy(Strategy):
 					if t.ennemi_in_my_small_perimeter():
 						return c.dribble(5.)
 					return c.dribble(1.5)
-<<<<<<< HEAD
-				if t.ball_in_his_goal_perimeter():
-=======
 				if t.in_his_goal_perimeter():
->>>>>>> 64bd584b12f4875469dcd2b9815b42b5cb6c505a
+
 					return c.shoot()
 				return c.shoot3(2.)
 			else:
@@ -55,11 +52,7 @@ class Fonceur3Strategy(Strategy):
 						if t.ennemi_in_my_small_perimeter():
 							return c.dribble(5.)
 						return c.dribble(1.5)
-<<<<<<< HEAD
 					if t.ball_in_his_goal_perimeter():
-=======
-					if t.in_his_goal_perimeter():
->>>>>>> 64bd584b12f4875469dcd2b9815b42b5cb6c505a
 						return c.shoot()
 					return c.petit_shoot2(2.)
 				else:
