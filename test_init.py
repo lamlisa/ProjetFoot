@@ -1,7 +1,7 @@
 from module.__init__ import *
 from soccersimulator import Simulation, show_simu
 
-nb_players = 1
+nb_players = 4
 
 pyteam = get_team(nb_players)
 thon = get_team(nb_players)
