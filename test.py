@@ -23,7 +23,7 @@ from exemple_apprentissage import my_get_features
 """pyteam = module_ahmedmelliti.get_team(1)"""
 #pyteam = module_Baladeur.get_team(2)
 #pyteam = module_TalebMaham.get_team(2)
-pyteam = module_seb05.get_team(2)
+#pyteam = module_seb05.get_team(1)
 
 #thon = module_CaiEddy.get_team(1)
 #thon = module_ariana.get_team(2)
@@ -31,14 +31,14 @@ pyteam = module_seb05.get_team(2)
 #thon = module_Austen.get_team(1)
 #thon = module_aaTarek.get_team(1)
 """thon = module_ahmedmelliti.get_team(1)"""
-#thon = module_Baladeur.get_team(2)
+thon = module_Baladeur.get_team(4)
 #thon = module_TalebMaham.get_team(2)
 #thon = module_seb05.get_team(1)
 
 #pyteam =SoccerTeam(name="PyTeam")
 #thon = SoccerTeam(name="ThonTeam")
-#pyteam = module.get_team(1)
-thon = module.get_team(2)
+pyteam = module.get_team(4)
+#thon = module.get_team(1)
 
 #pyteam.add("PyDefenseur",DefenseurStrategy())
 #pyteam.add("PyFonceur1",Fonceur1Strategy())
