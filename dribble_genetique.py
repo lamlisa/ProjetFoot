@@ -4,7 +4,7 @@ from genetique import *
 from soccersimulator import SoccerTeam, Simulation
 from genetique_paramsearch import ParamSearch
 
-"""#recherche genetique pour le dribble
+#recherche genetique pour le dribble
 d=dict()
 for i in range(1,101):
 	strength = 5*r.random()+1
@@ -33,7 +33,7 @@ while len(d)>1:
 		for i in d.keys():
 			crossover(i,d)
 			mutation(i,d)
-print(d)"""
+print(d)
 
 
 #recherche genetique pour le dribble et le shoot(fonceur3)
